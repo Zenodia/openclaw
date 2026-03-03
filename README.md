@@ -49,6 +49,93 @@ Model note: while many providers/models are supported, for the best experience a
 
 ## Install (recommended)
 
+## working on WSL (ubuntu 24.0204) on windows using this repo https://github.com/Zenodia/openclaw/tree/zcharpy/nvidia_as_provider
+
+create an .env file and populate the key
+
+```.env file
+NVIDIA_API_KEY=your_nvidia_api_key
+```
+
+then open wsl, cd into this repo, then run
+
+```bash
+pnpm install
+pnpm exec tsdown
+OPENCLAW_A2UI_SKIP_MISSING=1 bash -c '
+    pnpm run build:plugin-sdk:dts &&
+    node --import tsx scripts/write-plugin-sdk-entry-dts.ts &&
+    node --import tsx scripts/canvas-a2ui-copy.ts &&
+    node --import tsx scripts/copy-hook-metadata.ts &&
+    node --import tsx scripts/copy-export-html-templates.ts &&
+    node --import tsx scripts/write-build-info.ts &&
+    node --import tsx scripts/write-cli-startup-metadata.ts &&
+    node --import tsx scripts/write-cli-compat.ts
+```
+
+```bash
+curl -fsSL https://openclaw.ai/install.sh | bash
+## select 1 to install from this custom repo
+
+```
+
+```bash
+# on WSL you might need to bind the lan network to make it work
+openclaw config set gateway.bind lan
+```
+
+you might need to also set the below var
+
+```bash
+openclaw config set gateway.controlUi.dangerouslyAllowHostHeaderOriginFallback true
+```
+
+to run
+
+```bash
+openclaw gateway run
+```
+
+to stop the gateway
+
+```bash
+pkill -9 -f openclaw-gateway 2>/dev/null || true
+```
+
+## =================== integrating new skills ==================
+
+1. Put the skill in a scanned skills folder
+   OpenClaw looks for skills in a few standard places: workspace skills/, user ~/.openclaw/skills/, or extra directories configured via skills.load.extraDirs in openclaw.json.
+
+Given your config has a workspace at /home/<your_user_name>/.openclaw/workspace, do this:
+
+Go to your workspace:
+
+bash
+cd /home/<your_user_name>/.openclaw/workspace
+mkdir -p skills
+Pull the skill from your GitHub repo into that skills folder, keeping the folder name:
+
+bash
+cd /home/<your_user_name>/.openclaw/workspace/skills
+git clone https://github.com/Zenodia/agentic-context-engineering-optimization.git
+mv agentic-context-engineering-optimization/calendar_assistant_skill ./calendar-assistant
+rm -rf agentic-context-engineering-optimization
+You want the final layout to be:
+
+text
+/home/<your_user_name>/.openclaw/workspace/skills/calendar-assistant/SKILL.md
+
+# plus any other files from calendar_assistant_skill
+
+OpenClaw treats each subfolder under skills/ that contains a SKILL.md as one skill.
+
+for this specific skill , you will need to install additional pacakges in WSL
+
+```bash
+sudo apt install -y at && sudo service atd start
+```
+
 Runtime: **Node ≥22**.
 
 ```bash

@@ -883,6 +883,15 @@ export function buildNvidiaProvider(): ProviderConfig {
         maxTokens: NVIDIA_DEFAULT_MAX_TOKENS,
       },
       {
+        id: "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+        name: "NVIDIA Llama 3.3 Nemotron Super 49B v1.5",
+        reasoning: true,
+        input: ["text"],
+        cost: NVIDIA_DEFAULT_COST,
+        contextWindow: NVIDIA_DEFAULT_CONTEXT_WINDOW,
+        maxTokens: NVIDIA_DEFAULT_MAX_TOKENS,
+      },
+      {
         id: "meta/llama-3.3-70b-instruct",
         name: "Meta Llama 3.3 70B Instruct",
         reasoning: false,

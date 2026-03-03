@@ -45,11 +45,19 @@ If you still pass `--token`, remember it lands in shell history and `ps` output;
 
 ## Model IDs
 
-- `nvidia/llama-3.1-nemotron-70b-instruct` (default)
-- `meta/llama-3.3-70b-instruct`
-- `nvidia/mistral-nemo-minitron-8b-8k-instruct`
+NVIDIA NIM uses an `org/model-name` format. When referencing a model in OpenClaw config or CLI, prefix the full model ID with the provider name:
+
+| NVIDIA NIM model ID                           | OpenClaw reference                                   |
+| --------------------------------------------- | ---------------------------------------------------- |
+| `nvidia/llama-3.1-nemotron-70b-instruct`      | `nvidia/nvidia/llama-3.1-nemotron-70b-instruct`      |
+| `nvidia/llama-3.3-nemotron-super-49b-v1.5`    | `nvidia/nvidia/llama-3.3-nemotron-super-49b-v1.5`    |
+| `meta/llama-3.3-70b-instruct`                 | `nvidia/meta/llama-3.3-70b-instruct`                 |
+| `nvidia/mistral-nemo-minitron-8b-8k-instruct` | `nvidia/nvidia/mistral-nemo-minitron-8b-8k-instruct` |
+
+The format is always `{provider}/{model-id}`. For NVIDIA-owned models, this results in a double `nvidia/` prefix.
 
 ## Notes
 
 - OpenAI-compatible `/v1` endpoint; use an API key from NVIDIA NGC.
 - Provider auto-enables when `NVIDIA_API_KEY` is set; uses static defaults (131,072-token context window, 4,096 max tokens).
+- `nvidia/llama-3.3-nemotron-super-49b-v1.5` is a reasoning model (extended thinking supported).
