@@ -102,85 +102,44 @@ to stop the gateway
 pkill -9 -f openclaw-gateway 2>/dev/null || true
 ```
 
-## =================== integrating new skills ==================
+## Adding skills
 
-1. Put the skill in a scanned skills folder
-   OpenClaw looks for skills in a few standard places: workspace skills/, user ~/.openclaw/skills/, or extra directories configured via skills.load.extraDirs in openclaw.json.
+OpenClaw scans for skills in several locations: `workspace/skills/`, `~/.openclaw/skills/`, or
+any extra directories set via `skills.load.extraDirs` in your config. Each subdirectory that
+contains a `SKILL.md` is treated as one skill.
 
-Given your config has a workspace at /home/<your_user_name>/.openclaw/workspace, do this:
+### Install a skill
 
-Go to your workspace:
+1. Navigate to your workspace skills folder (create it if it doesn't exist):
 
-bash
-cd /home/<your_user_name>/.openclaw/workspace
+```bash
+cd ~/.openclaw/workspace
 mkdir -p skills
-Pull the skill from your GitHub repo into that skills folder, keeping the folder name:
+```
 
-bash
-cd /home/<your_user_name>/.openclaw/workspace/skills
+2. Clone the skill repository and place the skill folder inside `skills/`:
+
+```bash
+cd ~/.openclaw/workspace/skills
 git clone https://github.com/Zenodia/agentic-context-engineering-optimization.git
 mv agentic-context-engineering-optimization/calendar_assistant_skill ./calendar-assistant
 rm -rf agentic-context-engineering-optimization
-You want the final layout to be:
+```
 
-text
-/home/<your_user_name>/.openclaw/workspace/skills/calendar-assistant/SKILL.md
+The expected layout is:
 
-# plus any other files from calendar_assistant_skill
+```text
+~/.openclaw/workspace/skills/
+└── calendar-assistant/
+    ├── SKILL.md
+    └── ...
+```
 
-OpenClaw treats each subfolder under skills/ that contains a SKILL.md as one skill.
-
-for this specific skill , you will need to install additional pacakges in WSL
+3. If the skill has additional system dependencies, install them in WSL:
 
 ```bash
 sudo apt install -y at && sudo service atd start
 ```
-
-Runtime: **Node ≥22**.
-
-```bash
-npm install -g openclaw@latest
-# or: pnpm add -g openclaw@latest
-
-openclaw onboard --install-daemon
-```
-
-# ================= to modify memory ===================
-
-(venv) zenodia@DESKTOP-6D8G1IQ:~$ openclaw config set agents.defaults.memorySearch.query.hybrid.enabled true
-
-🦞 OpenClaw 2026.3.3 (4ffe15c) — Say "stop" and I'll stop—say "ship" and we'll both learn a lesson.
-
-Config overwrite: /home/zenodia/.openclaw/openclaw.json (sha256 30f1b1497e0b801000c762bd6ea98d2cd7f3a1a506cfee6ee329bc0e5841939f -> 2d50784ea8827ed25f84905047b1c3548416b70a752ab9922abceccc0ac4cc61, backup=/home/zenodia/.openclaw/openclaw.json.bak, changedPaths=7)
-Updated agents.defaults.memorySearch.query.hybrid.enabled. Restart the gateway to apply.
-(venv) zenodia@DESKTOP-6D8G1IQ:~$ openclaw config set agents.defaults.memorySearch.query.hybrid.temporalDecay.enabled true
-
-🦞 OpenClaw 2026.3.3 (4ffe15c) — One CLI to rule them all, and one more restart because you changed the port.
-
-Config overwrite: /home/zenodia/.openclaw/openclaw.json (sha256 2d50784ea8827ed25f84905047b1c3548416b70a752ab9922abceccc0ac4cc61 -> f60585a038d8c57db8688a5a17cb2ba373796eb45d6846ce4e022a035d8f5697, backup=/home/zenodia/.openclaw/openclaw.json.bak, changedPaths=7)
-Updated agents.defaults.memorySearch.query.hybrid.temporalDecay.enabled. Restart the gateway to apply.
-(venv) zenodia@DESKTOP-6D8G1IQ:~$ openclaw config set agents.defaults.memorySearch.query.hybrid.temporalDecay.halfLifeDays 30
-
-🦞 OpenClaw 2026.3.3 (4ffe15c) — Pairing codes exist because even bots believe in consent—and good security hygiene.
-
-Config overwrite: /home/zenodia/.openclaw/openclaw.json (sha256 f60585a038d8c57db8688a5a17cb2ba373796eb45d6846ce4e022a035d8f5697 -> dbf69aae784934ba27f1c1ae077518215f7c0aea84ec43d3656b6e6bfb407494, backup=/home/zenodia/.openclaw/openclaw.json.bak, changedPaths=7)
-Updated agents.defaults.memorySearch.query.hybrid.temporalDecay.halfLifeDays. Restart the gateway to apply.
-(venv) zenodia@DESKTOP-6D8G1IQ:~$ openclaw config set agents.defaults.memorySearch.query.hybrid.mmr.enabled true
-
-🦞 OpenClaw 2026.3.3 (4ffe15c) — The lobster in your shell. 🦞
-
-Config overwrite: /home/zenodia/.openclaw/openclaw.json (sha256 dbf69aae784934ba27f1c1ae077518215f7c0aea84ec43d3656b6e6bfb407494 -> 2900cfe14a73bc69799de64b3cebeded8ecf66bcf79ee22ac695eee3484028cf, backup=/home/zenodia/.openclaw/openclaw.json.bak, changedPaths=7)
-Updated agents.defaults.memorySearch.query.hybrid.mmr.enabled. Restart the gateway to apply.
-
-python3 -m venv ~/.openclaw/venv
-source ~/.openclaw/venv/bin/activate
-
-## while inside of the venv
-
-(venv) zenodia@DESKTOP-6D8G1IQ:~/openclaw$ pip install -r ~/.openclaw/workspace/skills/memory-ondisk/requirements.txt
-NVIDIA_API_KEY="nvapi-xxx"
-
-The wizard installs the Gateway daemon (launchd/systemd user service) so it stays running.
 
 ## Quick start (TL;DR)
 
