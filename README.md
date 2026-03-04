@@ -145,6 +145,41 @@ npm install -g openclaw@latest
 openclaw onboard --install-daemon
 ```
 
+# ================= to modify memory ===================
+
+(venv) zenodia@DESKTOP-6D8G1IQ:~$ openclaw config set agents.defaults.memorySearch.query.hybrid.enabled true
+
+🦞 OpenClaw 2026.3.3 (4ffe15c) — Say "stop" and I'll stop—say "ship" and we'll both learn a lesson.
+
+Config overwrite: /home/zenodia/.openclaw/openclaw.json (sha256 30f1b1497e0b801000c762bd6ea98d2cd7f3a1a506cfee6ee329bc0e5841939f -> 2d50784ea8827ed25f84905047b1c3548416b70a752ab9922abceccc0ac4cc61, backup=/home/zenodia/.openclaw/openclaw.json.bak, changedPaths=7)
+Updated agents.defaults.memorySearch.query.hybrid.enabled. Restart the gateway to apply.
+(venv) zenodia@DESKTOP-6D8G1IQ:~$ openclaw config set agents.defaults.memorySearch.query.hybrid.temporalDecay.enabled true
+
+🦞 OpenClaw 2026.3.3 (4ffe15c) — One CLI to rule them all, and one more restart because you changed the port.
+
+Config overwrite: /home/zenodia/.openclaw/openclaw.json (sha256 2d50784ea8827ed25f84905047b1c3548416b70a752ab9922abceccc0ac4cc61 -> f60585a038d8c57db8688a5a17cb2ba373796eb45d6846ce4e022a035d8f5697, backup=/home/zenodia/.openclaw/openclaw.json.bak, changedPaths=7)
+Updated agents.defaults.memorySearch.query.hybrid.temporalDecay.enabled. Restart the gateway to apply.
+(venv) zenodia@DESKTOP-6D8G1IQ:~$ openclaw config set agents.defaults.memorySearch.query.hybrid.temporalDecay.halfLifeDays 30
+
+🦞 OpenClaw 2026.3.3 (4ffe15c) — Pairing codes exist because even bots believe in consent—and good security hygiene.
+
+Config overwrite: /home/zenodia/.openclaw/openclaw.json (sha256 f60585a038d8c57db8688a5a17cb2ba373796eb45d6846ce4e022a035d8f5697 -> dbf69aae784934ba27f1c1ae077518215f7c0aea84ec43d3656b6e6bfb407494, backup=/home/zenodia/.openclaw/openclaw.json.bak, changedPaths=7)
+Updated agents.defaults.memorySearch.query.hybrid.temporalDecay.halfLifeDays. Restart the gateway to apply.
+(venv) zenodia@DESKTOP-6D8G1IQ:~$ openclaw config set agents.defaults.memorySearch.query.hybrid.mmr.enabled true
+
+🦞 OpenClaw 2026.3.3 (4ffe15c) — The lobster in your shell. 🦞
+
+Config overwrite: /home/zenodia/.openclaw/openclaw.json (sha256 dbf69aae784934ba27f1c1ae077518215f7c0aea84ec43d3656b6e6bfb407494 -> 2900cfe14a73bc69799de64b3cebeded8ecf66bcf79ee22ac695eee3484028cf, backup=/home/zenodia/.openclaw/openclaw.json.bak, changedPaths=7)
+Updated agents.defaults.memorySearch.query.hybrid.mmr.enabled. Restart the gateway to apply.
+
+python3 -m venv ~/.openclaw/venv
+source ~/.openclaw/venv/bin/activate
+
+## while inside of the venv
+
+(venv) zenodia@DESKTOP-6D8G1IQ:~/openclaw$ pip install -r ~/.openclaw/workspace/skills/memory-ondisk/requirements.txt
+NVIDIA_API_KEY="nvapi-xxx"
+
 The wizard installs the Gateway daemon (launchd/systemd user service) so it stays running.
 
 ## Quick start (TL;DR)
